@@ -25,6 +25,11 @@ LOOP:
 		case r == '+':
 			return l.lexFrontMatterSection(TypeFrontMatterTOML, r, "TOML", delimTOML)
 		case r == '-':
+			peek := l.peek()
+			if peek != '-' {
+				l.backup()
+				break LOOP
+			}
 			return l.lexFrontMatterSection(TypeFrontMatterYAML, r, "YAML", delimYAML)
 		case r == '{':
 			return lexFrontMatterJSON
